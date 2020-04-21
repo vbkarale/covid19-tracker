@@ -10,7 +10,7 @@
 // Setup module
 // ------------------------------
 
-var EchartsBarsTornados = function() {
+var EchartsBarsTornados = function () {
 
 
     //
@@ -18,13 +18,14 @@ var EchartsBarsTornados = function() {
     //
 
     // Bar and tornado charts
-    var _barsTornadosExamples = function() {
+    var _barsTornadosExamples = function () {
         if (typeof echarts == 'undefined') {
             console.warn('Warning - echarts.min.js is not loaded.');
             return;
         }
 
         // Define elements
+        var bars_basic_element2 = document.getElementById('bars_basic2');
         var bars_basic_element = document.getElementById('bars_basic');
         var bars_stacked_element = document.getElementById('bars_stacked');
         var bars_clustered_element = document.getElementById('bars_stacked_clustered');
@@ -34,15 +35,9 @@ var EchartsBarsTornados = function() {
         var bars_tornado_staggered_element = document.getElementById('bars_tornado_staggered');
 
 
-        //
-        // Charts configuration
-        //
-
-        // Basic bar chart
-        if (bars_basic_element) {
-
+        if (bars_basic_element2) {
             // Initialize chart
-            var bars_basic = echarts.init(bars_basic_element);
+            var bars_basic = echarts.init(bars_basic_element2);
 
 
             //
@@ -72,7 +67,7 @@ var EchartsBarsTornados = function() {
 
                 // Add legend
                 legend: {
-                    data: ['Year 2013', 'Year 2014'],
+                    data: ['Deaths', 'Confirmed'],
                     itemHeight: 8,
                     itemGap: 20,
                     textStyle: {
@@ -121,7 +116,7 @@ var EchartsBarsTornados = function() {
                 // Vertical axis
                 yAxis: [{
                     type: 'category',
-                    data: ['Germany','France','Spain','Netherlands','Belgium'],
+                    data: ['Connecticut', 'Massachusetts', 'Georgia', 'New Jersey', 'Texas', 'Maryland', 'Michigan', 'California', 'Florida', 'Washington', 'Pennsylvania', 'Illinois', 'Louisiana', 'New York'],
                     axisLabel: {
                         color: '#333'
                     },
@@ -147,24 +142,207 @@ var EchartsBarsTornados = function() {
                 // Add series
                 series: [
                     {
-                        name: 'Year 2013',
+                        name: 'Deaths',
                         type: 'bar',
                         itemStyle: {
                             normal: {
                                 color: '#EF5350'
                             }
                         },
-                        data: [38203, 73489, 129034, 204970, 331744]
+                        data: [$('.deathsConnecticut').text(),
+                        $('.deathsMassachusetts').text(),
+                        $('.deathsGeorgia').text(),
+                        $('.deathsNewJersey').text(),
+                        $('.deathsTexas').text(),
+                        $('.deathsMaryland').text(),
+                        $('.deathsMichigan').text(),
+                        $('.deathsCalifornia').text(),
+                        $('.deathsFlorida').text(),
+                        $('.deathsWashington').text(),
+                        $('.deathsPennsylvania').text(),
+                        $('.deathsIllinois').text(),
+                        $('.deathsLouisiana').text(),
+                        $('.deathsNewYork').text()]
                     },
                     {
-                        name: 'Year 2014',
+                        name: 'Confirmed',
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                color: '#4FC3F7'
+                            }
+                        },
+                        data: [$('.caseConnecticut').text(),
+                        $('.caseMassachusetts').text(),
+                        $('.caseGeorgia').text(),
+                        $('.caseNewJersey').text(),
+                        $('.caseTexas').text(),
+                        $('.caseMaryland').text(),
+                        $('.caseMichigan').text(),
+                        $('.caseCalifornia').text(),
+                        $('.caseFlorida').text(),
+                        $('.caseWashington').text(),
+                        $('.casePennsylvania').text(),
+                        $('.caseIllinois').text(),
+                        $('.caseLouisiana').text(),
+                        $('.caseNewYork').text()]
+                    }
+                ]
+            });
+        }
+
+
+        if (bars_basic_element) {
+            // Initialize chart
+            var bars_basic = echarts.init(bars_basic_element);
+
+
+            //
+            // Chart config
+            //
+
+            // Options
+            bars_basic.setOption({
+
+                // Global text styles
+                textStyle: {
+                    fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                    fontSize: 13
+                },
+
+                // Chart animation duration
+                animationDuration: 750,
+
+                // Setup grid
+                grid: {
+                    left: 0,
+                    right: 30,
+                    top: 35,
+                    bottom: 0,
+                    containLabel: true
+                },
+
+                // Add legend
+                legend: {
+                    data: ['Deaths', 'Recovered'],
+                    itemHeight: 8,
+                    itemGap: 20,
+                    textStyle: {
+                        padding: [0, 5]
+                    }
+                },
+
+                // Add tooltip
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(0,0,0,0.75)',
+                    padding: [10, 15],
+                    textStyle: {
+                        fontSize: 13,
+                        fontFamily: 'Roboto, sans-serif'
+                    },
+                    axisPointer: {
+                        type: 'shadow',
+                        shadowStyle: {
+                            color: 'rgba(0,0,0,0.025)'
+                        }
+                    }
+                },
+
+                // Horizontal axis
+                xAxis: [{
+                    type: 'value',
+                    boundaryGap: [0, 0.01],
+                    axisLabel: {
+                        color: '#333'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#999'
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#eee',
+                            type: 'dashed'
+                        }
+                    }
+                }],
+
+                // Vertical axis
+                yAxis: [{
+                    type: 'category',
+                    data: ['India', 'Brazil', 'Canada', 'Netherlands', 'Switzerland', 'Belgium', 'Turkey', 'Iran', 'UK', 'Germany', 'France', 'Italy', 'Spain', 'US'],
+                    axisLabel: {
+                        color: '#333'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#999'
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: ['#eee']
+                        }
+                    },
+                    splitArea: {
+                        show: true,
+                        areaStyle: {
+                            color: ['rgba(250,250,250,0.1)', 'rgba(0,0,0,0.015)']
+                        }
+                    }
+                }],
+
+                // Add series
+                series: [
+                    {
+                        name: 'Deaths',
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                color: '#EF5350'
+                            }
+                        },
+                        data: [$('.deathIN').text().replace(',', ''),
+                        $('.deathBR').text().replace(',', ''),
+                        $('.deathCA').text().replace(',', ''),
+                        $('.deathNL').text().replace(',', ''),
+                        $('.deathCH').text().replace(',', ''),
+                        $('.deathBE').text().replace(',', ''),
+                        $('.deathTR').text().replace(',', ''),
+                        $('.deathIran').text().replace(',', ''),
+                        $('.deathGB').text().replace(',', ''),
+                        $('.deathDE').text().replace(',', ''),
+                        $('.deathFR').text().replace(',', ''),
+                        $('.deathIT').text().replace(',', ''),
+                        $('.deathES').text().replace(',', ''),
+                        $('.deathUS').text().replace(',', '')]
+                    },
+                    {
+                        name: 'Recovered',
                         type: 'bar',
                         itemStyle: {
                             normal: {
                                 color: '#66BB6A'
                             }
                         },
-                        data: [39325, 83438, 131000, 221594, 334141]
+                        data: [$('.recoveredIN').text().replace(',', ''),
+                        $('.recoveredBR').text().replace(',', ''),
+                        $('.recoveredCA').text().replace(',', ''),
+                        $('.recoveredNL').text().replace(',', ''),
+                        $('.recoveredCH').text().replace(',', ''),
+                        $('.recoveredBE').text().replace(',', ''),
+                        $('.recoveredTR').text().replace(',', ''),
+                        $('.recoveredIran').text().replace(',', ''),
+                        $('.recoveredGB').text().replace(',', ''),
+                        $('.recoveredDE').text().replace(',', ''),
+                        $('.recoveredFR').text().replace(',', ''),
+                        $('.recoveredIT').text().replace(',', ''),
+                        $('.recoveredES').text().replace(',', ''),
+                        $('.recoveredUS').text().replace(',', '')]
                     }
                 ]
             });
@@ -204,7 +382,7 @@ var EchartsBarsTornados = function() {
 
                 // Add legend
                 legend: {
-                    data: ['Internet Explorer','Opera','Safari','Firefox','Chrome'],
+                    data: ['Internet Explorer', 'Opera', 'Safari', 'Firefox', 'Chrome'],
                     itemHeight: 8,
                     itemGap: 20,
                     textStyle: {
@@ -293,7 +471,7 @@ var EchartsBarsTornados = function() {
                                 }
                             }
                         },
-                        data:[320, 302, 301, 334, 390, 330, 320]
+                        data: [320, 302, 301, 334, 390, 330, 320]
                     },
                     {
                         name: 'Opera',
@@ -310,7 +488,7 @@ var EchartsBarsTornados = function() {
                                 }
                             }
                         },
-                        data:[120, 132, 101, 134, 120, 230, 210]
+                        data: [120, 132, 101, 134, 120, 230, 210]
                     },
                     {
                         name: 'Safari',
@@ -327,7 +505,7 @@ var EchartsBarsTornados = function() {
                                 }
                             }
                         },
-                        data:[220, 182, 191, 234, 290, 330, 310]
+                        data: [220, 182, 191, 234, 290, 330, 310]
                     },
                     {
                         name: 'Firefox',
@@ -344,7 +522,7 @@ var EchartsBarsTornados = function() {
                                 }
                             }
                         },
-                        data:[150, 212, 201, 154, 190, 330, 410]
+                        data: [150, 212, 201, 154, 190, 330, 410]
                     },
                     {
                         name: 'Chrome',
@@ -361,7 +539,7 @@ var EchartsBarsTornados = function() {
                                 }
                             }
                         },
-                        data:[820, 832, 901, 934, 1290, 1330, 1320]
+                        data: [820, 832, 901, 934, 1290, 1330, 1320]
                     }
                 ]
             });
@@ -402,8 +580,8 @@ var EchartsBarsTornados = function() {
                 // Add legend
                 legend: {
                     data: [
-                        'Version 1.7 - 2k data','Version 1.7 - 2w data','Version 1.7 - 20w data','',
-                        'Version 2.0 - 2k data','Version 2.0 - 2w data','Version 2.0 - 20w data'
+                        'Version 1.7 - 2k data', 'Version 1.7 - 2w data', 'Version 1.7 - 20w data', '',
+                        'Version 2.0 - 2k data', 'Version 2.0 - 2w data', 'Version 2.0 - 20w data'
                     ],
                     itemHeight: 2,
                     itemGap: 8,
@@ -453,7 +631,7 @@ var EchartsBarsTornados = function() {
                 yAxis: [
                     {
                         type: 'category',
-                        data: ['Line','Bar','Scatter','Pies'],
+                        data: ['Line', 'Bar', 'Scatter', 'Pies'],
                         axisLabel: {
                             color: '#333'
                         },
@@ -477,12 +655,12 @@ var EchartsBarsTornados = function() {
                     },
                     {
                         type: 'category',
-                        axisLine: {show:false},
-                        axisTick: {show:false},
-                        axisLabel: {show:false},
-                        splitArea: {show:false},
-                        splitLine: {show:false},
-                        data: ['Line','Bar','Scatter','Pies']
+                        axisLine: { show: false },
+                        axisTick: { show: false },
+                        axisLabel: { show: false },
+                        splitArea: { show: false },
+                        splitLine: { show: false },
+                        data: ['Line', 'Bar', 'Scatter', 'Pies']
                     }
                 ],
 
@@ -630,7 +808,7 @@ var EchartsBarsTornados = function() {
                     color: 'transparent'
                 }
             };
-            var dataStyle = { 
+            var dataStyle = {
                 normal: {
                     barBorderRadius: 3,
                     label: {
@@ -667,7 +845,7 @@ var EchartsBarsTornados = function() {
 
                 // Add legend
                 legend: {
-                    data: ['GML', 'PYP','WTC', 'ZTW'],
+                    data: ['GML', 'PYP', 'WTC', 'ZTW'],
                     itemHeight: 8,
                     itemGap: 20,
                     textStyle: {
@@ -961,7 +1139,7 @@ var EchartsBarsTornados = function() {
             bars_tornado_negative.setOption({
 
                 // Define colors
-                color: ['#2ec7c9','#5ab1ef','#b6a2de',],
+                color: ['#2ec7c9', '#5ab1ef', '#b6a2de',],
 
                 // Global text styles
                 textStyle: {
@@ -1031,7 +1209,7 @@ var EchartsBarsTornados = function() {
                 // Vertical axis
                 yAxis: [{
                     type: 'category',
-                    data: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                    data: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                     axisTick: {
                         show: false
                     },
@@ -1171,7 +1349,7 @@ var EchartsBarsTornados = function() {
                             color: 'rgba(0,0,0,0.025)'
                         }
                     },
-                    formatter: function(params) {
+                    formatter: function (params) {
                         return params[0].seriesName + ': ' + params[0].value + ' €';
                     }
                 },
@@ -1200,9 +1378,9 @@ var EchartsBarsTornados = function() {
                 // Vertical axis
                 yAxis: [{
                     type: 'category',
-                    axisLine: {show: false},
-                    axisLabel: {show: false},
-                    axisTick: {show: false},
+                    axisLine: { show: false },
+                    axisLabel: { show: false },
+                    axisTick: { show: false },
                     data: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     splitLine: {
                         show: true,
@@ -1237,18 +1415,18 @@ var EchartsBarsTornados = function() {
                             }
                         },
                         data: [
-                            {value: -680, itemStyle: labelRight},
-                            {value: -300, itemStyle: labelRight},
+                            { value: -680, itemStyle: labelRight },
+                            { value: -300, itemStyle: labelRight },
                             690,
                             900,
-                            {value: -390, itemStyle: labelRight},
+                            { value: -390, itemStyle: labelRight },
                             600,
-                            {value: -120, itemStyle: labelRight},
+                            { value: -120, itemStyle: labelRight },
                             700,
-                            {value: -120, itemStyle: labelRight},
+                            { value: -120, itemStyle: labelRight },
                             900,
                             580,
-                            {value: -720, itemStyle: labelRight}
+                            { value: -720, itemStyle: labelRight }
                         ]
                     }
                 ]
@@ -1261,7 +1439,7 @@ var EchartsBarsTornados = function() {
         //
 
         // Resize function
-        var triggerChartResize = function() {
+        var triggerChartResize = function () {
             bars_basic_element && bars_basic.resize();
             bars_stacked_element && bars_stacked.resize();
             bars_clustered_element && bars_clustered.resize();
@@ -1272,7 +1450,7 @@ var EchartsBarsTornados = function() {
         };
 
         // On sidebar width change
-        $(document).on('click', '.sidebar-control', function() {
+        $(document).on('click', '.sidebar-control', function () {
             setTimeout(function () {
                 triggerChartResize();
             }, 0);
@@ -1294,7 +1472,7 @@ var EchartsBarsTornados = function() {
     //
 
     return {
-        init: function() {
+        init: function () {
             _barsTornadosExamples();
         }
     }
@@ -1304,6 +1482,6 @@ var EchartsBarsTornados = function() {
 // Initialize module
 // ------------------------------
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     EchartsBarsTornados.init();
 });
