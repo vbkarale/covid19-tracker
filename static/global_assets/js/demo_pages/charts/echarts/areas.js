@@ -929,7 +929,7 @@ var EchartsAreas = function () {
             area_reversed_axis_element && area_reversed_axis.resize();
             area_multiple_element && area_multiple.resize();
             area_values_element && area_values.resize();
-            area_zoom_element && area_zoom.resize();
+            // area_zoom_element && area_zoom.resize();
         };
 
         // On sidebar width change
