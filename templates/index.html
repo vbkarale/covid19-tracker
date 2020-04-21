@@ -1,0 +1,628 @@
+{% extends 'layout.html' %}
+{% load static%}
+{%block content%}
+
+
+<div class="content">
+
+    <div class="mb-3 pt-2">
+        <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-4">
+                <h3 class="mb-0 font-weight-semibold">
+                    World COVID-19 Statistics
+                </h3>
+            </div>
+            <div class="col-md-3">
+                <span class="font-weight-semibold mb-0 text-danger-600 ">Data Updated at: {{date}}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xl-1">
+
+        </div>
+        <div class="col-sm-6 col-xl-2">
+
+            <!-- Satisfaction rate -->
+            <div class="card card-body text-center bg-orange-800 has-bg-image">
+                <div class="svg-center position-relative" id="progress_icon_one"></div>
+                <h2 class="progress-percentage mt-2 mb-1 font-weight-semibold">0%</h2>
+
+                Total Cases
+                <div class="font-size-lg opacity-200">
+                    <p id="totalcase">{{result.total_cases}}</p>
+                </div>
+            </div>
+            <!-- /satisfaction rate -->
+
+        </div>
+
+        <div class="col-sm-6 col-xl-2">
+
+            <!-- Satisfaction rate -->
+            <div class="card card-body text-center bg-danger-800 has-bg-image">
+                <div class="svg-center position-relative" id="progress_icon_two"></div>
+                <h2 class="progress-percentage mt-2 mb-1 font-weight-semibold">0%</h2>
+
+                Total Deaths
+                <div id="totaldeath" class="font-size-lg opacity-200">{{result.total_deaths}}</div>
+            </div>
+            <!-- /satisfaction rate -->
+
+        </div>
+
+        <div class="col-sm-6 col-xl-2">
+
+            <!-- Productivity goal  -->
+            <div class="card card-body text-center bg-success-800 has-bg-image">
+                <div class="svg-center position-relative" id="progress_icon_three"></div>
+                <h2 class="progress-percentage mt-2 mb-1 font-weight-semibold">0%</h2>
+
+                Total Recovered
+                <div id="totalrecovered" class="font-size-lg opacity-200">{{result.total_recovered}}</div>
+            </div>
+            <!-- /productivity goal -->
+
+        </div>
+
+        <div class="col-sm-6 col-xl-2">
+
+            <!-- Orders processed -->
+            <div class="card card-body text-center bg-violet-800 has-bg-image has-bg-image">
+                <div class="svg-center position-relative" id="progress_icon_four"></div>
+                <h2 class="progress-percentage mt-2 mb-1 font-weight-semibold">0%</h2>
+
+                New Cases
+                <div id="newcase" class="font-size-lg opacity-200">{{result.new_cases}}</div>
+            </div>
+            <!-- /orders processed -->
+
+        </div>
+
+        <div class="col-sm-6 col-xl-2">
+
+            <!-- Order shipped -->
+            <div class="card card-body text-center bg-warning-800 has-bg-image">
+                <div class="svg-center position-relative" id="progress_icon_five"></div>
+                <h2 class="progress-percentage mt-2 mb-1 font-weight-semibold">0%</h2>
+
+                New Deaths
+                <div id="newdeath" class="font-size-lg opacity-200">{{result.new_deaths}}</div>
+            </div>
+            <!-- /orders shipped -->
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">World map (Hover or Click)</h5>
+            <div class="header-elements">
+
+            </div>
+        </div>
+
+        <div class="card-body">
+            <p class="mb-3"></p>
+
+            <div class="map-container map-choropleth"></div>
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">Highly Affected Countries</h5>
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="text-sm text-muted">Pie Chart (hover or click)</h5>
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="pie_nested"></div>
+                    </div>
+
+                    <h5 class="text-sm text-muted">Bar Chart (hover or click)</h5>
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="bars_basic"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-3">
+                    <ul class="media-list">
+                        <br>
+                        <h4>click on the countries below</h4>
+
+                        {% for res in result3 %}
+                        <li class="media">
+                            <div class="mr-3">
+                                <img src="{{res.image}}" alt="">
+                            </div>
+                            <a href="{% url 'country' cname=res.code %}"
+                                class="media-body text-decoration-none text-reset">
+                                <div class="font-weight-semibold">{{res.cname}}</div>
+                                <span class="font-size-sm text-muted"></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-dark">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title"></h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class=col-md-6>
+                    <h1 class="text-center">STAY HOME SAVE LIFE</h1>
+                    <h5 class="text-center text-muted">Help Stop Corona Virus</h5>
+                    <h5 class="text-center">
+                        Thanks to Doctors, Nurses, working staff, volunteers and Police who are fighting to keep us safe
+                        by risking their own life.
+                    </h5>
+
+
+                </div>
+                <div class=col-md-6>
+                    <div class="card-img embed-responsive embed-responsive-16by9">
+                        <iframe allowfullscreen="" frameborder="0" mozallowfullscreen=""
+                            src="https://www.youtube.com/embed/rAj38E7vrS8" webkitallowfullscreen=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">World Countries Statistics</h5>
+            <div class="header-elements">
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="table-responsive table-scrollable">
+                        <table class="table ">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Confirmed</th>
+                                    <th>Recovered</th>
+                                    <th>Deaths</th>
+                                    <th>Cases per 1m people</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in result2%}
+                                {%if r.country_name != ''%}
+
+                                <tr>
+                                    <td class="name{{r.country_name}}"><img src="{{r.image}}"> {{r.country_name}}
+                                    </td>
+                                    <td class="case{{r.country_name}} case{{r.code}}">{{r.cases}}</td>
+                                    <td class="recovered{{r.country_name}} recovered{{r.code}}">
+                                        {{r.total_recovered}}
+                                    </td>
+                                    <td class="death{{r.country_name}} death{{r.code}}">{{r.deaths}}</td>
+                                    <td class="case1m{{r.country_name}} case1m{{r.code}}">
+                                        {{r.total_cases_per_1m_population}}</td>
+                                </tr>
+                                {%endif%}
+
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <br>
+
+                </div>
+
+                <div class="col-md-4">
+                    <h3 class="card-title">Top Stories</h3>
+                    {% for r in result4 %}
+                    <div class="card-img-actions mx-1 mt-1">
+                        <a target="_blank" href="{{r.url}}">
+                            <img class="card-img img-fluid" src="{{r.image}}" alt="">
+                        </a>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="font-weight-semibold mr-2"><a target="_blank" href="{{r.url}}"
+                                class="text-default">{{r.title}}</a>
+                        </h6>
+                        <span></span>
+                    </div>
+
+                    {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+
+    var gdpData = {
+        "AL": [4546],
+        "AF": [$('.caseAfghanistan').text(), $('.recoveredAfghanistan').text(), $('.deathAfghanistan').text(), $('.case1mAfghanistan').text()],
+        "DZ": [$('.caseAlgeria').text(), $('.recoveredAlgeria').text(), $('.deathAlgeria').text(), $('.case1mAlgeria').text()],
+        "AO": [$('.caseAngola').text(), $('.recoveredAngola').text(), $('.deathAngola').text(), $('.case1mAngola').text()],
+        "AG": [$('.caseAG').text(), $('.recoveredAG').text(), $('.deathAG').text(), $('.case1mAG').text()],
+        "AR": [$('.caseAR').text(), $('.recoveredAR').text(), $('.deathAR').text(), $('.case1mAR').text()],
+        "AM": [$('.caseAM').text(), $('.recoveredAM').text(), $('.deathAM').text(), $('.case1mAM').text()],
+        "AU": [$('.caseAU').text(), $('.recoveredAU').text(), $('.deathAU').text(), $('.case1mAU').text()],
+        "AT": [$('.caseAT').text(), $('.recoveredAT').text(), $('.deathAT').text(), $('.case1mAT').text()],
+        "AZ": [$('.caseAZ').text(), $('.recoveredAZ').text(), $('.deathAZ').text(), $('.case1mAZ').text()],
+        "BS": [$('.caseBS').text(), $('.recoveredBS').text(), $('.deathBS').text(), $('.case1mBS').text()],
+        "BH": [$('.caseBH').text(), $('.recoveredBH').text(), $('.deathBH').text(), $('.case1mBH').text()],
+        "BD": [$('.caseBD').text(), $('.recoveredBD').text(), $('.deathBD').text(), $('.case1mBD').text()],
+        "BB": [$('.caseBB').text(), $('.recoveredBB').text(), $('.deathBB').text(), $('.case1mBB').text()],
+        "BY": [$('.caseBY').text(), $('.recoveredBY').text(), $('.deathBY').text(), $('.case1mBY').text()],
+        "BE": [$('.caseBE').text(), $('.recoveredBE').text(), $('.deathBE').text(), $('.case1mBE').text()],
+        "BZ": [$('.caseBZ').text(), $('.recoveredBZ').text(), $('.deathBZ').text(), $('.case1mBZ').text()],
+        "BJ": [$('.caseBJ').text(), $('.recoveredBJ').text(), $('.deathBJ').text(), $('.case1mBJ').text()],
+        "BT": [$('.caseBT').text(), $('.recoveredBT').text(), $('.deathBT').text(), $('.case1mBT').text()],
+        "BO": [$('.caseBolivia').text(), $('.recoveredBolivia').text(), $('.deathBolivia').text(), $('.case1mBolivia').text()],
+        "BA": [$('.caseBA').text(), $('.recoveredBA').text(), $('.deathBA').text(), $('.case1mBA').text()],
+        "BW": [$('.caseBW').text(), $('.recoveredBW').text(), $('.deathBW').text(), $('.case1mBW').text()],
+        "BR": [$('.caseBR').text(), $('.recoveredBR').text(), $('.deathBR').text(), $('.case1mBR').text()],
+        "BN": [$('.caseBrunei').text(), $('.recoveredBrunei').text(), $('.deathBrunei').text(), $('.case1mBrunei').text()],
+        "BG": [$('.caseBG').text(), $('.recoveredBG').text(), $('.deathBG').text(), $('.case1mBG').text()],
+        "BF": [$('.caseBF').text(), $('.recoveredBF').text(), $('.deathBF').text(), $('.case1mBF').text()],
+        "BI": [$('.caseBI').text(), $('.recoveredBI').text(), $('.deathBI').text(), $('.case1mBI').text()],
+        "KH": [$('.caseKH').text(), $('.recoveredKH').text(), $('.deathKH').text(), $('.case1mKH').text()],
+        "CM": [$('.caseCM').text(), $('.recoveredCM').text(), $('.deathCM').text(), $('.case1mCM').text()],
+        "CA": [$('.caseCA').text(), $('.recoveredCA').text(), $('.deathCA').text(), $('.case1mCA').text()],
+        "CV": [$('.caseCV').text(), $('.recoveredCV').text(), $('.deathCV').text(), $('.case1mCV').text()],
+        "CF": [0, 0, 0, 0],
+        "TD": [$('.caseTD').text(), $('.recoveredTD').text(), $('.deathTD').text(), $('.case1mTD').text()],
+        "CL": [$('.caseCL').text(), $('.recoveredCL').text(), $('.deathCL').text(), $('.case1mCL').text()],
+        "CN": [$('.caseCN').text(), $('.recoveredCN').text(), $('.deathCN').text(), $('.case1mCN').text()],
+        "CO": [$('.caseCO').text(), $('.recoveredCO').text(), $('.deathCO').text(), $('.case1mCO').text()],
+        "KM": [0, 0, 0, 0],
+        "CD": [0, 0, 0, 0],
+        "CG": [$('.caseCongo').text(), $('.recoveredCongo').text(), $('.deathCongo').text(), $('.case1mCongo').text()],
+        "CR": [$('.caseCR').text(), $('.recoveredCR').text(), $('.deathCR').text(), $('.case1mCR').text()],
+        "CI": [0, 0, 0, 0],
+        "HR": [$('.caseHR').text(), $('.recoveredHR').text(), $('.deathHR').text(), $('.case1mHR').text()],
+        "CY": [$('.caseCY').text(), $('.recoveredCY').text(), $('.deathCY').text(), $('.case1mCY').text()],
+        "CZ": [$('.caseCZ').text(), $('.recoveredCZ').text(), $('.deathCZ').text(), $('.case1mCZ').text()],
+        "DK": [$('.caseDK').text(), $('.recoveredDK').text(), $('.deathDK').text(), $('.case1mDK').text()],
+        "DJ": [$('.caseDJ').text(), $('.recoveredDJ').text(), $('.deathDJ').text(), $('.case1mDJ').text()],
+        "DM": [$('.caseDM').text(), $('.recoveredDM').text(), $('.deathDM').text(), $('.case1mDM').text()],
+        "DO": [$('.caseDO').text(), $('.recoveredDO').text(), $('.deathDO').text(), $('.case1mDO').text()],
+        "EC": [$('.caseEC').text(), $('.recovereEC').text(), $('.deathEC').text(), $('.case1mEC').text()],
+        "EG": [$('.caseEG').text(), $('.recoveredEG').text(), $('.deathEG').text(), $('.case1mEG').text()],
+        "SV": [$('.caseSV').text(), $('.recoveredSV').text(), $('.deathSV').text(), $('.case1mSV').text()],
+        "GQ": [$('.caseGQ').text(), $('.recoveredGQ').text(), $('.deathGQ').text(), $('.case1mGQ').text()],
+        "ER": [$('.caseER').text(), $('.recoveredER').text(), $('.deathER').text(), $('.case1mER').text()],
+        "EE": [$('.caseEE').text(), $('.recoveredEE').text(), $('.deathEE').text(), $('.case1mEE').text()],
+        "ET": [$('.caseET').text(), $('.recoveredET').text(), $('.deathET').text(), $('.case1mET').text()],
+        "FJ": [$('.caseFJ').text(), $('.recoveredFJ').text(), $('.deathFJ').text(), $('.case1mFJ').text()],
+        "FI": [$('.caseFI').text(), $('.recoveredFI').text(), $('.deathFI').text(), $('.case1mFI').text()],
+        "FR": [$('.caseFR').text(), $('.recoveredFR').text(), $('.deathFR').text(), $('.case1mFR').text()],
+        "GA": [$('.caseGA').text(), $('.recoveredGA').text(), $('.deathGA').text(), $('.case1mGA').text()],
+        "GM": [$('.caseGM').text(), $('.recoveredGM').text(), $('.deathGM').text(), $('.case1mGM').text()],
+        "GE": [$('.caseGE').text(), $('.recoveredGE').text(), $('.deathGE').text(), $('.case1mGE').text()],
+        "DE": [$('.caseDE').text(), $('.recoveredDE').text(), $('.deathDE').text(), $('.case1mDE').text()],
+        "GH": [$('.caseGH').text(), $('.recoveredGH').text(), $('.deathGH').text(), $('.case1mGH').text()],
+        "GR": [$('.caseGR').text(), $('.recoveredGR').text(), $('.deathGR').text(), $('.case1mGR').text()],
+        "GD": [$('.caseGD').text(), $('.recoveredGD').text(), $('.deathGD').text(), $('.case1mGD').text()],
+        "GT": [$('.caseGT').text(), $('.recoveredGT').text(), $('.deathGT').text(), $('.case1mGT').text()],
+        "GN": [$('.caseGN').text(), $('.recoveredGN').text(), $('.deathGN').text(), $('.case1mGN').text()],
+        "GW": [$('.caseGW').text(), $('.recoveredGW').text(), $('.deathGW').text(), $('.case1mGW').text()],
+        "GY": [$('.caseGY').text(), $('.recoveredGY').text(), $('.deathGY').text(), $('.case1mGY').text()],
+        "HT": [$('.caseHT').text(), $('.recoveredHT').text(), $('.deathHT').text(), $('.case1mHT').text()],
+        "HN": [$('.caseGY').text(), $('.recoveredGY').text(), $('.deathGY').text(), $('.case1mGY').text()],
+        "HK": [$('.caseHN').text(), $('.recoveredHN').text(), $('.deathHN').text(), $('.case1mHN').text()],
+        "HU": [$('.caseHU').text(), $('.recoveredHU').text(), $('.deathHU').text(), $('.case1mHU').text()],
+        "IS": [$('.caseIS').text(), $('.recoveredIS').text(), $('.deathIS').text(), $('.case1mIS').text()],
+        "IN": [$('.caseIndia').text(), $('.recoveredIndia').text(), $('.deathIndia').text(), $('.case1mIndia').text()],
+        "ID": [$('.caseID').text(), $('.recoveredID').text(), $('.deathID').text(), $('.case1mID').text()],
+        "IR": [$('.caseIran').text(), $('.recoveredIran').text(), $('.deathIran').text(), $('.case1mIran').text()],
+        "IQ": [$('.caseIQ').text(), $('.recoveredIQ').text(), $('.deathIQ').text(), $('.case1mIQ').text()],
+        "IE": [$('.caseIE').text(), $('.recoveredIE').text(), $('.deathIE').text(), $('.case1mIE').text()],
+        "IL": [$('.caseIL').text(), $('.recoveredIL').text(), $('.deathIL').text(), $('.case1mIL').text()],
+        "IT": [$('.caseIT').text(), $('.recoveredIT').text(), $('.deathIT').text(), $('.case1mIT').text()],
+        "JM": [$('.caseJM').text(), $('.recoveredJM').text(), $('.deathJM').text(), $('.case1mJM').text()],
+        "JP": [$('.caseJP').text(), $('.recoveredJP').text(), $('.deathJP').text(), $('.case1mJP').text()],
+        "JO": [$('.caseJO').text(), $('.recoveredJO').text(), $('.deathJO').text(), $('.case1mJO').text()],
+        "KZ": [$('.caseKZ').text(), $('.recoveredKZ').text(), $('.deathKZ').text(), $('.case1mKZ').text()],
+        "KE": [$('.caseKE').text(), $('.recoveredKE').text(), $('.deathKE').text(), $('.case1mKE').text()],
+        "KI": [$('.caseKE').text(), $('.recoveredKE').text(), $('.deathKE').text(), $('.case1mKE').text()],
+        "KR": [0, 0, 0, 0],
+        "KW": [$('.caseKW').text(), $('.recoveredKW').text(), $('.deathKW').text(), $('.case1mKW').text()],
+        "KG": [$('.caseKG').text(), $('.recoveredKG').text(), $('.deathKG').text(), $('.case1mKG').text()],
+        "LA": [0, 0, 0, 0],
+        "LV": [$('.caseLV').text(), $('.recoveredLV').text(), $('.deathLV').text(), $('.case1mLV').text()],
+        "LB": [$('.caseLB').text(), $('.recoveredLB').text(), $('.deathLB').text(), $('.case1mLB').text()],
+        "LS": [0, 0, 0, 0],
+        "LR": [$('.caseLR').text(), $('.recoveredLR').text(), $('.deathLR').text(), $('.case1mLR').text()],
+        "LY": [$('.caseLY').text(), $('.recoveredLY').text(), $('.deathLY').text(), $('.case1mLY').text()],
+        "LT": [$('.caseLT').text(), $('.recoveredLT').text(), $('.deathLT').text(), $('.case1mLT').text()],
+        "LU": [$('.caseLU').text(), $('.recoveredLU').text(), $('.deathLU').text(), $('.case1mLU').text()],
+        "MK": [$('.caseMK').text(), $('.recoveredMK').text(), $('.deathMK').text(), $('.case1mMK').text()],
+        "MG": [$('.caseMG').text(), $('.recoveredMG').text(), $('.deathMG').text(), $('.case1mMG').text()],
+        "MW": [$('.caseMW').text(), $('.recoveredMW').text(), $('.deathMW').text(), $('.case1mMW').text()],
+        "MY": [$('.caseMY').text(), $('.recoveredMY').text(), $('.deathMY').text(), $('.case1mMY').text()],
+        "MV": [$('.caseMV').text(), $('.recoveredMV').text(), $('.deathMV').text(), $('.case1mMV').text()],
+        "ML": [$('.caseML').text(), $('.recoveredML').text(), $('.deathML').text(), $('.case1mML').text()],
+        "MT": [$('.caseMT').text(), $('.recoveredMT').text(), $('.deathMT').text(), $('.case1mMT').text()],
+        "MR": [$('.caseMR').text(), $('.recoveredMR').text(), $('.deathMR').text(), $('.case1mMR').text()],
+        "MU": [$('.caseMU').text(), $('.recoveredMU').text(), $('.deathMU').text(), $('.case1mMU').text()],
+        "MX": [$('.caseMX').text(), $('.recoveredMX').text(), $('.deathMX').text(), $('.case1mMX').text()],
+        "MD": [$('.caseMoldova').text(), $('.recoveredMoldova').text(), $('.deathMoldova').text(), $('.case1mMoldova').text()],
+        "MN": [$('.caseMN').text(), $('.recoveredMN').text(), $('.deathMN').text(), $('.case1mMN').text()],
+        "ME": [$('.caseME').text(), $('.recoveredME').text(), $('.deathME').text(), $('.case1mME').text()],
+        "MA": [$('.caseMA').text(), $('.recoveredMA').text(), $('.deathMA').text(), $('.case1mMA').text()],
+        "MZ": [$('.caseMZ').text(), $('.recoveredMZ').text(), $('.deathMZ').text(), $('.case1mMZ').text()],
+        "MM": [$('.caseMM').text(), $('.recoveredMM').text(), $('.deathMM').text(), $('.case1mMM').text()],
+        "NA": [$('.caseNA').text(), $('.recoveredNA').text(), $('.deathNA').text(), $('.case1mNA').text()],
+        "NP": [$('.caseNP').text(), $('.recoveredNP').text(), $('.deathNP').text(), $('.case1mNP').text()],
+        "NL": [$('.caseNL').text(), $('.recoveredNL').text(), $('.deathNL').text(), $('.case1mNL').text()],
+        "NZ": [$('.caseNZ').text(), $('.recoveredNZ').text(), $('.deathNZ').text(), $('.case1mNZ').text()],
+        "NI": [$('.caseNI').text(), $('.recoveredNI').text(), $('.deathNI').text(), $('.case1mNI').text()],
+        "NE": [$('.caseNE').text(), $('.recoveredNE').text(), $('.deathNE').text(), $('.case1mNE').text()],
+        "NG": [$('.caseNG').text(), $('.recoveredNG').text(), $('.deathNG').text(), $('.case1mNG').text()],
+        "NO": [$('.caseNO').text(), $('.recoveredNO').text(), $('.deathNO').text(), $('.case1mNO').text()],
+        "OM": [$('.caseOM').text(), $('.recoveredOM').text(), $('.deathOM').text(), $('.case1mOM').text()],
+        "PK": [$('.casePK').text(), $('.recoveredPK').text(), $('.deathPK').text(), $('.case1mPK').text()],
+        "PA": [$('.casePA').text(), $('.recoveredPA').text(), $('.deathPA').text(), $('.case1mPA').text()],
+        "PG": [$('.casePG').text(), $('.recoveredPG').text(), $('.deathPG').text(), $('.case1mPG').text()],
+        "PY": [$('.casePY').text(), $('.recoveredPY').text(), $('.deathPY').text(), $('.case1mPY').text()],
+        "PE": [$('.casePE').text(), $('.recoveredPE').text(), $('.deathPE').text(), $('.case1mPE').text()],
+        "PH": [$('.casePH').text(), $('.recoveredPH').text(), $('.deathPH').text(), $('.case1mPH').text()],
+        "PL": [$('.casePL').text(), $('.recoveredPL').text(), $('.deathPL').text(), $('.case1mPL').text()],
+        "PT": [$('.casePT').text(), $('.recoveredPT').text(), $('.deathPT').text(), $('.case1mPT').text()],
+        "QA": [$('.caseQA').text(), $('.recoveredQA').text(), $('.deathQA').text(), $('.case1mQA').text()],
+        "RO": [$('.caseRO').text(), $('.recoveredRO').text(), $('.deathRO').text(), $('.case1mRO').text()],
+        "RU": [$('.caseRussia').text(), $('.recoveredRussia').text(), $('.deathRussia').text(), $('.case1mRussia').text()],
+        "RW": [$('.caseRW').text(), $('.recoveredRW').text(), $('.deathRW').text(), $('.case1mRW').text()],
+        "WS": [0, 0, 0, 0],
+        "ST": [$('.caseST').text(), $('.recoveredST').text(), $('.deathST').text(), $('.case1mST').text()],
+        "SA": [$('.caseSA').text(), $('.recoveredSA').text(), $('.deathSA').text(), $('.case1mSA').text()],
+        "SN": [$('.caseSN').text(), $('.recoveredSN').text(), $('.deathSN').text(), $('.case1mSN').text()],
+        "RS": [$('.caseRS').text(), $('.recoveredRS').text(), $('.deathRS').text(), $('.case1mRS').text()],
+        "SC": [$('.caseSC').text(), $('.recoveredSC').text(), $('.deathSC').text(), $('.case1mSC').text()],
+        "SL": [$('.caseSL').text(), $('.recoveredSL').text(), $('.deathSL').text(), $('.case1mSL').text()],
+        "SG": [$('.caseSG').text(), $('.recoveredSG').text(), $('.deathSG').text(), $('.case1mSG').text()],
+        "SK": [$('.caseSK').text(), $('.recoveredSK').text(), $('.deathSK').text(), $('.case1mSK').text()],
+        "SI": [$('.caseSI').text(), $('.recoveredSI').text(), $('.deathSI').text(), $('.case1mSI').text()],
+        "SB": [0, 0, 0, 0],
+        "ZA": [$('.caseZA').text(), $('.recoveredZA').text(), $('.deathZA').text(), $('.case1mZA').text()],
+        "ES": [$('.caseES').text(), $('.recoveredES').text(), $('.deathES').text(), $('.case1mES').text()],
+        "LK": [$('.caseLK').text(), $('.recoveredLK').text(), $('.deathLK').text(), $('.case1mLK').text()],
+        "KN": [$('.caseKN').text(), $('.recoveredKN').text(), $('.deathKN').text(), $('.case1mKN').text()],
+        "LC": [$('.caseLC').text(), $('.recoveredLC').text(), $('.deathLC').text(), $('.case1mLC').text()],
+        "VC": [0, 0, 0, 0],
+        "SD": [$('.caseSD').text(), $('.recoveredSD').text(), $('.deathSD').text(), $('.case1mSD').text()],
+        "SR": [$('.caseSR').text(), $('.recoveredSR').text(), $('.deathSR').text(), $('.case1mSR').text()],
+        "SZ": [$('.caseSZ').text(), $('.recoveredSZ').text(), $('.deathSZ').text(), $('.case1mSZ').text()],
+        "SE": [$('.caseSE').text(), $('.recoveredSE').text(), $('.deathSE').text(), $('.case1mSE').text()],
+        "CH": [$('.caseCH').text(), $('.recoveredCH').text(), $('.deathCH').text(), $('.case1mCH').text()],
+        "SY": [$('.caseSyria').text(), $('.recoveredSyria').text(), $('.deathSyria').text(), $('.case1mSyria').text()],
+        "TW": [$('.caseTaiwan').text(), $('.recoveredTaiwan').text(), $('.deathTaiwan').text(), $('.case1mTaiwan').text()],
+        "TJ": [$('.caseTaiwan').text(), $('.recoveredTaiwan').text(), $('.deathTaiwan').text(), $('.case1mTaiwan').text()],
+        "TZ": [0, 0, 0, 0],
+        "TH": [$('.caseTH').text(), $('.recoveredTH').text(), $('.deathTH').text(), $('.case1mTH').text()],
+        "TL": [$('.caseTL').text(), $('.recoveredTL').text(), $('.deathTL').text(), $('.case1mTL').text()],
+        "TG": [$('.caseTG').text(), $('.recoveredTG').text(), $('.deathTG').text(), $('.case1mTG').text()],
+        "TO": [0, 0, 0, 0],
+        "TT": [$('.caseTT').text(), $('.recoveredTT').text(), $('.deathTT').text(), $('.case1mTT').text()],
+        "TN": [$('.caseTN').text(), $('.recoveredTN').text(), $('.deathTN').text(), $('.case1mTN').text()],
+        "TR": [$('.caseTR').text(), $('.recoveredTR').text(), $('.deathTR').text(), $('.case1mTR').text()],
+        "TM": [0, 0, 0, 0],
+        "UG": [$('.caseUG').text(), $('.recoveredUG').text(), $('.deathUG').text(), $('.case1mUG').text()],
+        "UA": [$('.caseUA').text(), $('.recoveredUA').text(), $('.deathUA').text(), $('.case1mUA').text()],
+        "AE": [$('.caseUAE').text(), $('.recoveredUAE').text(), $('.deathUAE').text(), $('.case1mUAE').text()],
+        "GB": [$('.caseGB').text(), $('.recoveredGB').text(), $('.deathGB').text(), $('.case1mGB').text()],
+        "US": [$('.caseUSA').text(), $('.recoveredUSA').text(), $('.deathUSA').text(), $('.case1mUSA').text()],
+        "UY": [$('.caseUY').text(), $('.recoveredUY').text(), $('.deathUY').text(), $('.case1mUY').text()],
+        "UZ": [$('.caseUZ').text(), $('.recoveredUZ').text(), $('.deathUZ').text(), $('.case1mUZ').text()],
+        "VU": [0, 0, 0, 0],
+        "VE": [$('.caseVenezuela').text(), $('.recoveredVenezuela').text(), $('.deathVenezuela').text(), $('.case1mVenezuela').text()],
+        "VN": [$('.caseVietnam').text(), $('.recoveredVietnam').text(), $('.deathVietnam').text(), $('.case1mVietnam').text()],
+        "YE": [$('.caseYE').text(), $('.recoveredYE').text(), $('.deathYE').text(), $('.case1mYE').text()],
+        "ZM": [$('.caseZM').text(), $('.recoveredZM').text(), $('.deathZM').text(), $('.case1mZM').text()],
+        "ZW": [$('.caseZW').text(), $('.recoveredZW').text(), $('.deathZW').text(), $('.case1mZW').text()],
+    };
+
+
+    var EchartsPiesDonuts = function () {
+
+
+        //
+        // Setup module components
+        //
+
+        // Pie and donut charts
+        var _piesDonutsExamples = function () {
+            if (typeof echarts == 'undefined') {
+                console.warn('Warning - echarts.min.js is not loaded.');
+                return;
+            }
+
+            // Define elements
+            var pie_nested_element = document.getElementById('pie_nested');
+
+
+
+            // Nested
+            if (pie_nested_element) {
+
+                // Initialize chart
+                var pie_nested = echarts.init(pie_nested_element);
+
+
+                //
+                // Chart config
+                //
+
+                // Options
+                pie_nested.setOption({
+
+                    // Colors
+                    color: [
+                        '#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
+                        '#8d98b3', '#e5cf0d', '#97b552', '#95706d', '#dc69aa',
+                        '#07a2a4', '#9a7fd1', '#588dd5', '#f5994e', '#c05050',
+                        '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089'
+                    ],
+
+                    // Global text styles
+                    textStyle: {
+                        fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                        fontSize: 13
+                    },
+
+                    // Add tooltip
+                    tooltip: {
+                        trigger: 'item',
+                        backgroundColor: 'rgba(0,0,0,0.75)',
+                        padding: [10, 15],
+                        textStyle: {
+                            fontSize: 13,
+                            fontFamily: 'Roboto, sans-serif'
+                        },
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+
+                    // Add legend
+                    legend: {
+                        orient: 'vertical',
+                        top: 'center',
+                        left: 0,
+                        data: [],
+                        itemHeight: 8,
+                        itemWidth: 8
+                    },
+
+                    // Add series
+                    series: [
+
+                        // Inner
+                        {
+                            name: 'Countries',
+                            type: 'pie',
+                            selectedMode: 'single',
+                            radius: [0, '50%'],
+                            itemStyle: {
+                                normal: {
+                                    borderWidth: 1,
+                                    borderColor: '#fff',
+                                    label: {
+                                        position: 'inner'
+                                    },
+                                    labelLine: {
+                                        show: false
+                                    }
+                                }
+                            },
+                            data: [
+                                { value: $('.caseUS').text().replace(',', ''), name: 'USA' },
+                                { value: $('.caseES').text().replace(',', ''), name: 'Spain' },
+                                { value: $('.caseIT').text().replace(',', ''), name: 'Italy' },
+                                { value: $('.caseFR').text().replace(',', ''), name: 'France' },
+                                { value: $('.caseDE').text().replace(',', ''), name: 'Germany' }
+                            ]
+                        },
+
+                        // Outer
+                        {
+                            name: 'Countries',
+                            type: 'pie',
+                            radius: ['60%', '85%'],
+                            itemStyle: {
+                                normal: {
+                                    borderWidth: 1,
+                                    borderColor: '#fff'
+                                }
+                            },
+                            data: [
+                                { value: $('.caseGB').text().replace(',', ''), name: 'UK' },
+                                { value: $('.caseIran').text().replace(',', ''), name: 'Iran' },
+                                { value: $('.caseTR').text().replace(',', ''), name: 'Turkey' },
+                                { value: $('.caseBE').text().replace(',', ''), name: 'Belgium' },
+                                { value: $('.caseCH').text().replace(',', ''), name: 'Switzerland' },
+                                { value: $('.caseNL').text().replace(',', ''), name: 'Netherlands' },
+                                { value: $('.caseRussia').text().replace(',', ''), name: 'Russia' },
+                                { value: $('.caseIN').text().replace(',', ''), name: 'India' },
+                                { value: $('.caseBR').text().replace(',', ''), name: 'Brazil' },
+
+
+                            ]
+                        }
+                    ]
+                });
+            }
+
+
+            // Resize function
+            var triggerChartResize = function () {
+                pie_basic_element && pie_basic.resize();
+                pie_donut_element && pie_donut.resize();
+                pie_nested_element && pie_nested.resize();
+                pie_infographic_element && pie_infographic.resize();
+                pie_rose_element && pie_rose.resize();
+                pie_rose_labels_element && pie_rose_labels.resize();
+                pie_levels_element && pie_levels.resize();
+                pie_timeline_element && pie_timeline.resize();
+                pie_multiples_element && pie_multiples.resize();
+            };
+
+            // On sidebar width change
+            $(document).on('click', '.sidebar-control', function () {
+                setTimeout(function () {
+                    triggerChartResize();
+                }, 0);
+            });
+
+            // On window resize
+            var resizeCharts;
+            window.onresize = function () {
+                clearTimeout(resizeCharts);
+                resizeCharts = setTimeout(function () {
+                    triggerChartResize();
+                }, 200);
+            };
+        };
+
+
+        //
+        // Return objects assigned to module
+        //
+
+        return {
+            init: function () {
+                _piesDonutsExamples();
+            }
+        }
+    }();
+
+
+    // Initialize module
+    // ------------------------------
+
+    document.addEventListener('DOMContentLoaded', function () {
+        EchartsPiesDonuts.init();
+    });
+
+
+
+</script>
+
+
+{% endblock %}

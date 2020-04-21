@@ -1,0 +1,699 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load poll_extras %}
+{% block content %}
+<style>
+    .layout-boxed-bg {
+        background: url(../static/global_assets/images/backgrounds/boxed_bg.png) repeat
+    }
+
+    .layout-boxed {
+        box-shadow: -4px 2px 4px rgba(0, 0, 0, .15), 4px 2px 4px rgba(0, 0, 0, .15)
+    }
+</style>
+<div class="content">
+    <div class="mb-3 pt-2">
+        <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-4">
+                <h3 class="mb-0 font-weight-semibold">
+                    COVID-19 USA Statistics
+                </h3>
+            </div>
+            <div class="col-md-3">
+                <span class="font-weight-semibold mb-0 text-danger-600 ">Data Updated at: {{date}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="media">
+                    <div class="media-body ">
+                        <div class="d-flex">
+                            <h1 class="font-weight-semibold mb-0">{{result.cases.total}}</h1>
+
+                        </div>
+                        <span class="text-uppercase font-size-xs">Confirmed &nbsp;
+                            <i class="icon-stats-growth icon-2x text-danger-800 opacity-75"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="media">
+                    <div class="media-body ">
+                        <div class="d-flex">
+                            <h1 class="font-weight-semibold mb-0">   
+                                {% if result.cases.new != None %}
+                                {{result.cases.new}}
+                                {% else %}
+                                {{'0'}}
+                                {%endif%}</h1>
+                        </div>
+                        <span class="text-uppercase font-size-xs">New Cases &nbsp;
+                            <i class="icon-stairs-up icon-2x text-warning-800 opacity-75"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="media">
+                    <div class="media-body ">
+                        <div class="d-flex">
+                            <h1 class="font-weight-semibold mb-0">{{result.tests.total}}</h1>
+                        </div>
+                        <span class="text-uppercase font-size-xs">Tests &nbsp;
+                            <i class="icon-collaboration icon-2x text-warning-800 opacity-75"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="media">
+                    <div class="media-body ">
+                        <div class="d-flex">
+                            <h1 class="font-weight-semibold mb-0"> {{result.cases.active}}</h1>
+                            <span class="badge bg-danger-400 badge-pill align-self-center ml-2">
+                                {% if result.cases.new != None %}
+                                {{result.cases.new}}
+                                {% else %}
+                                {{'0'}}
+                                {%endif%}</span>
+                        </div>
+                        <span class="text-uppercase font-size-xs">Active &nbsp;
+                            <i class="icon-stats-growth2 icon-2x text-danger-400 opacity-75"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="media">
+                    <div class="media-body ">
+                        <div class="d-flex">
+                            <h1 class="font-weight-semibold mb-0"> {{result.cases.recovered}}</h1>
+                        </div>
+                        <span class="text-uppercase font-size-xs">Recovered &nbsp;
+                            <i class="icon-pulse2 icon-2x text-success-400 opacity-75"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="media">
+                    <div class="media-body ">
+                        <div class="d-flex">
+                            <h1 class="font-weight-semibold mb-0">{{result.deaths.total}}</h1>
+                            <span class="badge bg-danger-400 badge-pill align-self-center ml-2">
+                                 {% if result.deaths.new != None %}
+                                {{result.deaths.new}}
+                                {% else %}
+                                {{'0'}}
+                                {%endif%}</span>
+                        </div>
+                        <span class="text-uppercase font-size-xs">Deaths &nbsp;
+                            <i class="icon-minus3 icon-2x text-danger-400 opacity-75"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Chart shows total cases</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="line_zoom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Chart shows daily new cases</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="line_zoom2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title"></h5>
+            <div class="header-elements">
+
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="mb-3">
+                        <h5 class="card-title">India map (Hover or Click)</h5>
+                    </p>
+                    <div class="map-container map-us"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">Highly Affected States</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="bars_basic2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /basic donut -->
+
+
+
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">State wise Cases</h5>
+            <div class="header-elements">
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="table-responsive table-scrollable">
+                        <table class="table ">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>State</th>
+                                    <th>Confirmed</th>
+                                    <th>Deaths</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in result2%}
+                                <tr>
+                                    <td>{{r.state}}</td>
+                                    <td class="case{{r.state | cut:' ' }}">{{r.confirmed}}</td>
+                                    <td class="deaths{{r.state | cut:' '}}">{{r.deaths}}</td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <h3 class="card-title">Top Stories</h3>
+                    {% for r in result3 %}
+                    <div class="card-img-actions mx-1 mt-1">
+                      <a target="_blank" href="{{r.url}}">  
+                                <img class="card-img img-fluid" src="{{r.image}}" alt=""></a>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="font-weight-semibold mr-2"><a target="_blank" href="{{r.url}}"
+                                class="text-default">{{r.title}}</a>
+                        </h6>
+                        <span></span>
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var stateData = {
+        "US-VA": [$('.caseVirginia').text(), $('.deathsVirginia').text()],
+        "US-PA": [$('.casePennsylvania').text(), $('.deathsPennsylvania').text()],
+        "US-TN": [$('.caseTennessee').text(), $('.deathsTennessee').text()],
+        "US-WV": [$('.caseWestVirginia').text(), $('.deathsWestVirginia').text()],
+        "US-NV": [$('.caseNevada').text(), $('.deathsNevada').text()],
+        "US-TX": [$('.caseTexas').text(), $('.deathsTexas').text()],
+        "US-NH": [$('.caseNewHampshire').text(), $('.deathsNewHampshire').text()],
+        "US-NY": [$('.caseNewYork').text(), $('.deathsNewYork').text()],
+        "US-HI": [$('.caseHawaii').text(), $('.deathsHawaii').text()],
+        "US-VT": [$('.caseVermont').text(), $('.deathsVermont').text()],
+        "US-NM": [$('.caseNewMexico').text(), $('.deathsNewMexico').text()],
+        "US-NC": [$('.caseNorthCarolina').text(), $('.deathsNorthCarolina').text()],
+        "US-ND": [$('.caseNorthDakota').text(), $('.deathsNorthDakota').text()],
+        "US-NE": [$('.caseNebraska').text(), $('.deathsNebraska').text()],
+        "US-LA": [$('.caseLouisiana').text(), $('.deathsLouisiana').text()],
+        "US-SD": [$('.caseSouthDakota').text(), $('.deathsSouthDakota').text()],
+        "US-DC": [$('.caseDistrictofColumbia').text(), $('.deathsDistrictofColumbia').text()],
+        "US-DE": [$('.caseDelaware').text(), $('.deathsDelaware').text()],
+        "US-FL": [$('.caseFlorida').text(), $('.deathsFlorida').text()],
+        "US-CT": [$('.caseConnecticut').text(), $('.deathsConnecticut').text()],
+        "US-WA": [$('.caseWashington').text(), $('.deathsWashington').text()],
+        "US-KS": [$('.caseKansas').text(), $('.deathsKansas').text()],
+        "US-WI": [$('.caseWisconsin').text(), $('.deathsWisconsin').text()],
+        "US-OR": [$('.caseOregon').text(), $('.deathsOregon').text()],
+        "US-KY": [$('.caseKentucky').text(), $('.deathsKentucky').text()],
+        "US-ME": [$('.caseMaine').text(), $('.deathsMaine').text()],
+        "US-OH": [$('.caseOhio').text(), $('.deathsOhio').text()],
+        "US-OK": [$('.caseOklahoma').text(), $('.deathsOklahoma').text()],
+        "US-ID": [$('.caseIdaho').text(), $('.deathsIdaho').text()],
+        "US-WY": [$('.caseWyoming').text(), $('.deathsWyoming').text()],
+        "US-UT": [$('.caseUtah').text(), $('.deathsUtah').text()],
+        "US-IN": [$('.caseIndiana').text(), $('.deathsIndiana').text()],
+        "US-IL": [$('.caseIllinois').text(), $('.deathsIllinois').text()],
+        "US-AK": [$('.caseAlaska').text(), $('.deathsAlaska').text()],
+        "US-NJ": [$('.caseNewJersey').text(), $('.deathsNewJersey').text()],
+        "US-CO": [$('.caseColorado').text(), $('.deathsColorado').text()],
+        "US-MD": [$('.caseMaryland').text(), $('.deathsMaryland').text()],
+        "US-MA": [$('.caseMassachusetts').text(), $('.deathsMassachusetts').text()],
+        "US-AL": [$('.caseAlabama').text(), $('.deathsAlabama').text()],
+        "US-MO": [$('.caseMissouri').text(), $('.deathsMissouri').text()],
+        "US-MN": [$('.caseMinnesota').text(), $('.deathsMinnesota').text()],
+        "US-CA": [$('.caseCalifornia').text(), $('.deathsCalifornia').text()],
+        "US-IA": [$('.caseIowa').text(), $('.deathsIowa').text()],
+        "US-MI": [$('.caseMichigan').text(), $('.deathsMichigan').text()],
+        "US-GA": [$('.caseGeorgia').text(), $('.deathsGeorgia').text()],
+        "US-AZ": [$('.caseArizona').text(), $('.deathsArizona').text()],
+        "US-MT": [$('.caseMontana').text(), $('.deathsMontana').text()],
+        "US-MS": [$('.caseMississippi').text(), $('.deathsMississippi').text()],
+        "US-SC": [$('.caseSouthCarolina').text(), $('.deathsSouthCarolina').text()],
+        "US-RI": [$('.caseRhodeIsland').text(), $('.deathsRhodeIsland').text()],
+        "US-AR": [$('.caseArkansas').text(), $('.deathsArkansas').text()]
+
+    };
+
+    var state = {
+        "US-VA": [$('.caseVirginia').text()],
+        "US-PA": [$('.casePennsylvania').text()],
+        "US-TN": [$('.caseTennessee').text()],
+        "US-WV": [$('.caseWestVirginia').text()],
+        "US-NV": [$('.caseNevada').text()],
+        "US-NH": [$('.caseNewHampshire').text()],
+        "US-NY": [$('.caseNewYork').text()],
+        "US-HI": [$('.caseHawaii').text()],
+        "US-NM": [$('.caseNewMexico').text()],
+        "US-NC": [$('.caseNorthCarolina').text()],
+        "US-ND": [$('.caseNorthDakota').text()],
+        "US-NE": [$('.caseNebraska').text()],
+        "US-LA": [$('.caseLouisiana').text()],
+        "US-SD": [$('.caseSouthDakota').text()],
+        "US-DC": [$('.caseDistrictofColumbia').text()],
+        "US-DE": [$('.caseDelaware').text()],
+        "US-FL": [$('.caseFlorida').text()],
+        "US-CT": [$('.caseConnecticut').text()],
+        "US-WA": [$('.caseWashington').text()],
+        "US-KS": [$('.caseKansas').text()],
+        "US-WI": [$('.caseWisconsin').text()],
+        "US-OR": [$('.caseOregon').text()],
+        "US-KY": [$('.caseKentucky').text()],
+        "US-ME": [$('.caseMaine').text()],
+        "US-OH": [$('.caseOhio').text()],
+        "US-OK": [$('.caseOklahoma').text()],
+        "US-ID": [$('.caseIdaho').text()],
+        "US-WY": [$('.caseWyoming').text()],
+        "US-UT": [$('.caseUtah').text()],
+        "US-IN": [$('.caseIndiana').text()],
+        "US-IL": [$('.caseIllinois').text()],
+        "US-AK": [$('.caseAlaska').text()],
+        "US-NJ": [$('.caseNewJersey').text()],
+        "US-CO": [$('.caseColorado').text()],
+        "US-MD": [$('.caseMaryland').text()],
+        "US-MA": [$('.caseMassachusetts').text()],
+        "US-AL": [$('.caseAlabama').text()],
+        "US-MO": [$('.caseMissouri').text()],
+        "US-MN": [$('.caseMinnesota').text()],
+        "US-CA": [$('.caseCalifornia').text()],
+        "US-IA": [$('.caseIowa').text()],
+        "US-MI": [$('.caseMichigan').text()],
+        "US-GA": [$('.caseGeorgia').text()],
+        "US-AZ": [$('.caseArizona').text()],
+        "US-MT": [$('.caseMontana').text()],
+        "US-MS": [$('.caseMississippi').text()],
+        "US-SC": [$('.caseSouthCarolina').text()],
+        "US-RI": [$('.caseRhodeIsland').text()],
+        "US-AR": [$('.caseArkansas').text()]
+
+    };
+
+
+    $('.map-us').vectorMap({
+        map: 'us_lcc',
+        backgroundColor: 'transparent',
+        series: {
+            regions: [{
+                values: state,
+                scale: ['#C8EEFF', '#0071A4'],
+                normalizeFunction: 'polynomial'
+            }]
+        },
+        onRegionLabelShow: function (e, el, code) {
+            el.html(el.html() + '<br>' + 'confirmed - ' + stateData[code][0]
+                + '<br>' + 'Deaths - ' + stateData[code][1]
+
+
+            );
+        }
+    });
+</script>
+
+<script>
+    var EchartsLines = function () {
+        var _lineChartExamples = function () {
+            if (typeof echarts == 'undefined') {
+                console.warn('Warning - echarts.min.js is not loaded.');
+                return;
+            }
+            var line_zoom_element = document.getElementById('line_zoom');
+             var line_zoom_element2 = document.getElementById('line_zoom2');
+            if (line_zoom_element) {
+                var deaths = {{ arr2 }}
+            var recovered = {{ arr3 }}
+        var line_zoom = echarts.init(line_zoom_element);
+        line_zoom.setOption({
+            // Define colors
+            color: ["#424956", "#d74e67", '#0092ff'],
+            // Global text styles
+            textStyle: {
+                fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                fontSize: 13
+            },
+            // Chart animation duration
+            animationDuration: 750,
+            // Setup grid
+            grid: {
+                left: 0,
+                right: 40,
+                top: 35,
+                bottom: 60,
+                containLabel: true
+            },
+
+            // Add legend
+            legend: {
+                data: ['Confirmed', 'Deaths', 'Recovered'],
+                itemHeight: 8,
+                itemGap: 20
+            },
+
+            // Add tooltip
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: 'rgba(0,0,0,0.75)',
+                padding: [10, 15],
+                textStyle: {
+                    fontSize: 13,
+                    fontFamily: 'Roboto, sans-serif'
+                }
+            },
+
+            // Horizontal axis
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    color: '#333'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#999'
+                    }
+                },
+                data: {{ arr4 | safe}}
+        }],
+
+    // Vertical axis
+    yAxis: [{
+        type: 'value',
+        axisLabel: {
+            formatter: '{value} ',
+            color: '#333'
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#999'
+            }
+        },
+        splitLine: {
+            lineStyle: {
+                color: ['#eee']
+            }
+        },
+        splitArea: {
+            show: true,
+            areaStyle: {
+                color: ['rgba(250,250,250,0.1)', 'rgba(0,0,0,0.01)']
+            }
+        }
+    }],
+
+        // Zoom control
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 0,
+                end: 100
+            },
+            {
+                show: true,
+                type: 'slider',
+                start: 30,
+                end: 70,
+                height: 40,
+                bottom: 0,
+                borderColor: '#ccc',
+                fillerColor: 'rgba(0,0,0,0.05)',
+                handleStyle: {
+                    color: '#585f63'
+                }
+            }
+        ],
+
+            // Add series
+            series: [
+                {
+                    name: 'Confirmed',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6,
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 2
+                        }
+                    },
+                    data: {{ arr1 }}
+                        },
+                {
+                    name: 'Deaths',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6,
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 2
+                        }
+                    },
+                    data: deaths
+                },
+                {
+                    name: 'Recovered',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6,
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 2
+                        }
+                    },
+                    data: recovered
+                }
+            ]
+                });
+            }
+
+
+            
+             if (line_zoom_element2) {   
+        var line_zoom = echarts.init(line_zoom_element2);
+        line_zoom.setOption({
+            // Define colors
+            color: ["#424956", "#d74e67", '#0092ff'],
+            // Global text styles
+            textStyle: {
+                fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                fontSize: 13
+            },
+            // Chart animation duration
+            animationDuration: 750,
+            // Setup grid
+            grid: {
+                left: 0,
+                right: 40,
+                top: 35,
+                bottom: 60,
+                containLabel: true
+            },
+
+            // Add legend
+            legend: {
+                data: ['Cases'],
+                itemHeight: 8,
+                itemGap: 20
+            },
+
+            // Add tooltip
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: 'rgba(0,0,0,0.75)',
+                padding: [10, 15],
+                textStyle: {
+                    fontSize: 13,
+                    fontFamily: 'Roboto, sans-serif'
+                }
+            },
+
+            // Horizontal axis
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    color: '#333'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#999'
+                    }
+                },
+                data: {{ arr5 | safe}}
+        }],
+
+    // Vertical axis
+    yAxis: [{
+        type: 'value',
+        axisLabel: {
+            formatter: '{value} ',
+            color: '#333'
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#999'
+            }
+        },
+        splitLine: {
+            lineStyle: {
+                color: ['#eee']
+            }
+        },
+        splitArea: {
+            show: true,
+            areaStyle: {
+                color: ['rgba(250,250,250,0.1)', 'rgba(0,0,0,0.01)']
+            }
+        }
+    }],
+
+        // Zoom control
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 0,
+                end: 100
+            },
+            {
+                show: true,
+                type: 'slider',
+                start: 0,
+                end: 100,
+                height: 40,
+                bottom: 0,
+                borderColor: '#ccc',
+                fillerColor: 'rgba(0,0,0,0.05)',
+                handleStyle: {
+                    color: '#585f63'
+                }
+            }
+        ],
+
+            // Add series
+            series: [
+                {
+                    name: 'Cases',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6,
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 2
+                        }
+                    },
+                    data: {{ arr6 }}
+                        }
+            ]
+                });
+            }
+
+    var triggerChartResize = function () {
+        line_zoom_element && line_zoom.resize();
+         line_zoom_element2 && line_zoom2.resize();
+    };
+
+    // On sidebar width change
+    $(document).on('click', '.sidebar-control', function () {
+        setTimeout(function () {
+            triggerChartResize();
+        }, 0);
+    });
+
+    // On window resize
+    var resizeCharts;
+    window.onresize = function () {
+        clearTimeout(resizeCharts);
+        resizeCharts = setTimeout(function () {
+            triggerChartResize();
+        }, 200);
+    };
+        };
+
+    return {
+        init: function () {
+            _lineChartExamples();
+        }
+    }
+    }();
+    document.addEventListener('DOMContentLoaded', function () {
+        EchartsLines.init();
+    });
+</script>
+
+
+{% endblock %}
