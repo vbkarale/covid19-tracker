@@ -236,7 +236,7 @@ var EchartsBarsTornados = function () {
                 tooltip: {
                     trigger: 'axis',
                     backgroundColor: 'rgba(0,0,0,0.75)',
-                    padding: [10, 15],
+                    padding: [10, 5],
                     textStyle: {
                         fontSize: 13,
                         fontFamily: 'Roboto, sans-serif'

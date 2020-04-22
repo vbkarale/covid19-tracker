@@ -68,7 +68,7 @@ def index(request):
     n = {}
     j = 0
     url2 = ('http://newsapi.org/v2/top-headlines?'
-            'sources=the-times-of-india&'
+            'sources=google-news&'
             'apiKey=34cf10d01da242f2ba2f5c59121bb8db')
 
     try:
@@ -86,7 +86,7 @@ def index(request):
             gnews.append(n.copy())
         j = j+1
 
-    return render(request, 'index.html', {'date': date, 'result': data, 'result2': data2, 'result3': affected,'result4':gnews})
+    return render(request, 'index.html', {'date': date, 'result': data, 'result2': data2, 'result3': affected, 'result4': gnews})
 
 
 def country(request, cname):
@@ -554,13 +554,12 @@ def demo(request):
     url = "https://covid-193.p.rapidapi.com/statistics"
 
     headers = {
-    'x-rapidapi-host': "covid-193.p.rapidapi.com",
-    'x-rapidapi-key': "600accc2d1msh6a879fcb9fc8c48p155e80jsn3c283317ffe5"
+        'x-rapidapi-host': "covid-193.p.rapidapi.com",
+        'x-rapidapi-key': "600accc2d1msh6a879fcb9fc8c48p155e80jsn3c283317ffe5"
     }
 
     response = requests.request("GET", url, headers=headers)
     data = json.loads(response.text)
-    
 
     for d2 in data["response"]:
         cname = d2.get('country')
@@ -574,7 +573,7 @@ def demo(request):
         if d != None:
             dt = d.alpha_2
             d2["code"] = dt
-            d2["image"] = "https://www.countryflags.io/"+ dt +"/shiny/16.png"
+            d2["image"] = "https://www.countryflags.io/" + dt + "/shiny/16.png"
         elif d == None:
             d2["code"] = ''
             d2["image"] = ''
