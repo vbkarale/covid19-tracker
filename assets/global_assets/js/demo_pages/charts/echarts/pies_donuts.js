@@ -56,10 +56,10 @@ var EchartsPiesDonuts = function() {
 
                 // Colors
                 color: [
-                    '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
-                    '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
-                    '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
-                    '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+                    '#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
+                    '#8d98b3', '#e5cf0d', '#97b552', '#95706d', '#dc69aa',
+                    '#07a2a4', '#9a7fd1', '#588dd5', '#f5994e', '#c05050',
+                    '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089'
                 ],
 
                 // Global text styles
@@ -70,7 +70,7 @@ var EchartsPiesDonuts = function() {
 
                 // Add title
                 title: {
-                    text: 'Browser popularity',
+                    text: 'Highly Affected States',
                     subtext: 'Open source information',
                     left: 'center',
                     textStyle: {
@@ -99,14 +99,14 @@ var EchartsPiesDonuts = function() {
                     orient: 'vertical',
                     top: 'center',
                     left: 0,
-                    data: ['IE', 'Opera', 'Safari', 'Firefox', 'Chrome'],
+                    data: [],
                     itemHeight: 8,
                     itemWidth: 8
                 },
 
                 // Add series
                 series: [{
-                    name: 'Browsers',
+                    name: 'Confirmed Cases',
                     type: 'pie',
                     radius: '70%',
                     center: ['50%', '57.5%'],
@@ -117,16 +117,25 @@ var EchartsPiesDonuts = function() {
                         }
                     },
                     data: [
-                        {value: 335, name: 'IE'},
-                        {value: 310, name: 'Opera'},
-                        {value: 234, name: 'Safari'},
-                        {value: 135, name: 'Firefox'},
-                        {value: 1548, name: 'Chrome'}
+                        { value: $('.caseMH').text(), name: 'Maharashtra' },
+                        { value: $('.caseDL').text(), name: 'Delhi' },
+                        { value: $('.caseTN').text(), name: 'Tamil Nadu' },
+                        { value: $('.caseRJ').text(), name: 'Rajasthan' },
+                        { value: $('.caseMP').text(), name: 'MP' },
+                        { value: $('.caseTG').text(), name: 'Telangana' },
+                        { value: $('.caseGJ').text(), name: 'Gujarat' },
+                        { value: $('.caseUP').text(), name: 'UP' },
+                        { value: $('.caseAP').text(), name: 'AP' },
+                        { value: $('.caseKL').text(), name: 'Kerala' },
+                        { value: $('.caseJK').text(), name: 'J&K' },
+                        { value: $('.caseKA').text(), name: 'Karnataka' },
+                        { value: $('.caseHR').text(), name: 'Haryana' },
+                        { value: $('.casePB').text(), name: 'Punjab' },
+                        { value: $('.caseWB').text(), name: 'WB' }
                     ]
                 }]
             });
         }
-
         // Basic donut chart
         if (pie_donut_element) {
 

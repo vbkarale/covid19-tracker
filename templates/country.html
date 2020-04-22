@@ -128,27 +128,17 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-
-
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">Chart shows total cases </h5>
+        </div>
 
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Chart shows total cases </h5>
-                </div>
-
-                <div class="card-body">
-                    <div class="chart-container">
-                        <div class="chart has-fixed-height" id="line_zoom"></div>
-                    </div>
-                </div>
+        <div class="card-body">
+            <div class="chart-container">
+                <div class="chart has-fixed-height" id="line_zoom"></div>
             </div>
         </div>
     </div>
@@ -156,7 +146,7 @@
     <div class="card">
         <div class="card-header header-elements-inline">
             <h5 class="card-title">Chart shows daily new cases </h5>
-           
+
         </div>
 
         <div class="card-body">
@@ -166,32 +156,31 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h5 class="card-title"></h5>
-                    <div class="header-elements">
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title"></h5>
+            <div class="header-elements">
 
-                    </div>
-                </div>
+            </div>
+        </div>
 
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="chart-container">
-                                <div class="chart has-fixed-height" id="pie_basic"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="mb-3">
-                                <h5 class="card-title">India map (Hover or Click)</h5>
-                            </p>
-                            <div class="map-container map-india"></div>
-                        </div>
+        <div class="card-body">
+            <p class="mb-3">
+                <h5 class="card-title">India map (Hover or Click)</h5>
+            </p>
+            <div class="map-container map-india"></div>
+        </div>
+    </div>
 
-                    </div>
-                </div>
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">Chart shows daily new cases </h5>
+
+        </div>
+
+        <div class="card-body">
+            <div class="chart-container">
+                <div class="chart has-fixed-height" id="pie_basic"></div>
             </div>
         </div>
     </div>
@@ -209,15 +198,6 @@
             </div>
         </div>
     </div>
-
-    
-
-    
-    <!-- /zoom option -->
-
-
-
-
 
     <div class="card">
         <div class="card-header header-elements-inline">
@@ -292,9 +272,9 @@
                     <h3 class="card-title">Top Stories</h3>
                     {% for r in result4 %}
                     <div class="card-img-actions mx-1 mt-1">
-                       <a target="_blank" href="{{r.url}}"> 
-                                <img class="card-img img-fluid" src="{{r.image}}" alt="">
-                                </a>
+                        <a target="_blank" href="{{r.url}}">
+                            <img class="card-img img-fluid" src="{{r.image}}" alt="">
+                        </a>
                     </div>
 
                     <div class="card-body">
@@ -307,10 +287,10 @@
                     {% endfor %}
                 </div>
             </div>
-
-
         </div>
     </div>
+
+
 </div>
 
 <script>

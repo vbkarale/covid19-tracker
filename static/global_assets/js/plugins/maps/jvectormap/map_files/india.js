@@ -1,5 +1,5 @@
 jQuery.fn.vectorMap('addMap', 'india_en', {
-    "width": 350.0,
+    "width": 600.7063107441331,
     "height": 840.7063107441331,
     "paths": {
         "ANDAMAN & NICOBAR ISLANDS": {
